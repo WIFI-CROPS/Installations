@@ -6,6 +6,5 @@ chmod +x UnInstall_DB_Grafana_telegraf.sh
 echo "Starting Uninstallation..."
 ./UnInstall_DB_Grafana_telegraf.sh
 echo "Cleaning up..."
-rm UnInstall_DB_Grafana_Telegr.sh
-rm UnInstall_DB_Grafana_telegraf.sh
+rm UnInstall*
 echo "Done! UnInstallation complete"
