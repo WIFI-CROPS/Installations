@@ -7,4 +7,5 @@ echo "Starting installation..."
 ./Install_DB_Grafana_telegraf.sh
 echo "Cleaning up..."
 rm Install_DB_Grafana_telegraf.*
+rm Grafana_DB_telegraf.sh
 echo "Done! Installation complete"
