@@ -7,4 +7,5 @@ echo "Starting Uninstallation..."
 ./UnInstall_DB_Grafana_telegraf.sh
 echo "Cleaning up..."
 rm UnInstall_DB_Grafana_Telegr.sh
+rm UnInstall_DB_Grafana_telegraf.sh
 echo "Done! UnInstallation complete"
