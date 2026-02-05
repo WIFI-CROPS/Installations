@@ -33,3 +33,34 @@ ________________________________________________________________________________
   ## Destination bucket to write into.
   bucket = "01_Monitoring_BUCKET"
 _______________________________________________________________________________________________________________________
+Linux Agent Parameters.
+# Global tags apply to all metrics collected by this agent
+[global_tags]
+  Company = "IIDA ELECTRONICS (THAILAND) COMPANY LIMITED"
+  System  = "Unix/Linux"
+
+# Agent configurations
+[agent]
+  interval = "10s"
+  round_interval = true
+  metric_batch_size = 1000
+  metric_buffer_limit = 10000
+  collection_jitter = "0s"
+  flush_interval = "10s"
+  flush_jitter = "0s"
+  precision = ""
+  hostname = "" # ปล่อยว่างไว้ Telegraf จะดึง hostname ของเครื่องมาเองอัตโนมัติ
+  omit_hostname = false
+
+###############################################################################
+#                            OUTPUT PLUGINS                                   #
+###############################################################################
+
+# เลือกเปิดใช้งาน Output ตามที่คุณใช้งาน (ตัวอย่างนี้คือ InfluxDB v2)
+[[outputs.influxdb_v2]]
+  urls = ["http://10.232.9.98:8086"]
+  token = "vLmB2c3byyR0NdQjIetLS5rF9E-aIfiKx-WLGV-GUn57Ag2ctscniAp2P1FFhR7_QTgAlhufT56-IWj2NwBPsA=="
+  organization = "01_Monitoring_ORG"
+  bucket = "01_Monitoring_BUCKET"
+
+###############################################################################
