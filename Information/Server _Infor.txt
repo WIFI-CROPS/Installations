@@ -15,10 +15,6 @@ Teletraf : 01_Servers_Monitoring_Sys
    Start Telegraf
    2.telegraf --config http://10.232.9.98:8086/api/v2/telegrafs/1037231fe4aed000
 
-
-* TOKEN: EE1_tCpkaKzGamfsX-Nj9GbNCer7wKDxIQSnY7Ed5RMIKYBM8fEQAPmjynjnIWgJVP4ZI6CvdH22ORXGPXbR2A==
-
-*****export INFLUX_TOKEN=qPiDj9ALqUl8MtZEADK4aVbGf1m7GFjmGDzQN3wuDxyX9YSerNxM_cd7n2HvZymWxEHqU-PHzYl8717MrffMKA==
 ___________________________________________________________________________________________________________________________
 [[outputs.influxdb_v2]]
   ## The URLs of the InfluxDB cluster nodes.
