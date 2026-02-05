@@ -1,7 +1,10 @@
 # Ubuntu CLI ใช้ในการติดตั้ง
 <br>
-  Login >> su root >> cd / >> mkdir Tools >> cd Tools >> 
-  <br> # CLI >>  wget https://raw.githubusercontent.com/WIFI-CROPS/Installations/refs/heads/main/Grafana_DB_telegraf.sh "
+  <br>     # su root 
+  <br>     # cd / 
+  <br>     # mkdir Tools 
+  <br>     # cd Tools 
+  <br>     # wget https://raw.githubusercontent.com/WIFI-CROPS/Installations/refs/heads/main/Grafana_DB_telegraf.sh "
   <br>
 
 To read Hoymiles inverters there is a nice project called [OpenDTU](https://github.com/tbnobody/OpenDTU) which uses an ESP32 to talk to them. 
