@@ -1,2 +1,2 @@
 Ubantu Server CLI 
-# wget 
+  wget 
