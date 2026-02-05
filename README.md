@@ -1,4 +1,4 @@
-# Ubantu CLI ใช้ในการติดตั้ง
+# Ubuntu CLI ใช้ในการติดตั้ง
 <br>
   Login >> su root >> cd / >> mkdir Tools >> cd Tools >> wget url
 
