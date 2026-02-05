@@ -4,7 +4,7 @@
   <br>     # cd / 
   <br>     # mkdir Tools 
   <br>     # cd Tools 
-  <br>     # wget https://raw.githubusercontent.com/WIFI-CROPS/Installations/refs/heads/main/Grafana_DB_telegraf.sh "
+  <br>     # wget https://raw.githubusercontent.com/WIFI-CROPS/Installations/refs/heads/main/Grafana_DB_telegraf.sh
   <br>     # chmod +x Grafana_DB_telegraf.sh
   <br>     # ./Grafana_DB_telegraf.sh
 
