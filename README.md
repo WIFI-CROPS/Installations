@@ -1,6 +1,6 @@
 # Ubantu CLI ใช้ในการติดตั้ง
-
-[![GitHub release](https://img.shields.io/github/release/dokuhn/openDTU-BreakoutBoard.svg)](https://GitHub.com/dokuhn/openDTU-BreakoutBoard/releases/) [![CC BY-NC-SA 4.0][cc-by-nc-sa-shield]][cc-by-nc-sa]
+<br>
+  Login >> su root >> cd / >> mkdir Tools >> cd Tools >> wget url
 
 To read Hoymiles inverters there is a nice project called [OpenDTU](https://github.com/tbnobody/OpenDTU) which uses an ESP32 to talk to them. 
 
