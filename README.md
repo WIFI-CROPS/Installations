@@ -7,6 +7,8 @@
   <br>     # wget https://raw.githubusercontent.com/WIFI-CROPS/Installations/refs/heads/main/Grafana_DB_telegraf.sh
   <br>     # chmod +x Grafana_DB_telegraf.sh
   <br>     # ./Grafana_DB_telegraf.sh
+  <br>     # Done! Installation complete
+
 
 To read Hoymiles inverters there is a nice project called [OpenDTU](https://github.com/tbnobody/OpenDTU) which uses an ESP32 to talk to them. 
 
