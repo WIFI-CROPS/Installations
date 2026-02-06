@@ -4,3 +4,6 @@ InfluxDB User: Monitor_ADM
          Bucket : 01_Monitoring_BUCKET
    Token : wUiHw9u1Sx_5dtFFWr-K35p9wnCe_0azR7r7O91bl6zWHVZbFoD133HSMzmJhO1BqVP5k9F-EB8J-fcijC9zmA==
 Teletraf : 01_Servers_Monitoring_Sys
+  
+API : Servers_Monitoring_API
+Tken API : Rku94J0phLQFMyUPbvf3QZ1FtQwWnPkEqRyiCm8FwLjTeTp5pOphW3h8UcUhTnI5D9PGRAL6qCQmZJTrDEVGHw==
