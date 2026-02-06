@@ -1,0 +1,121 @@
+<#
+.SYNOPSIS
+    สคริปต์ติดตั้ง Telegraf และตั้งค่าสำหรับ IIDA ELECTRONICS (THAILAND)
+    
+.DESCRIPTION
+    1. ดาวน์โหลด Telegraf 1.37.1
+    2. สร้างโฟลเดอร์ใน C:\Program Files\InfluxData\telegraf
+    3. สร้างไฟล์ telegraf.conf พร้อมค่า Config เฉพาะทาง
+    4. ติดตั้งและเริ่มทำงาน Windows Service
+#>
+
+# --- 1. ตั้งค่าตัวแปร ---
+$url = "https://dl.influxdata.com/telegraf/releases/telegraf-1.37.1_windows_amd64.zip"
+$zipFile = "$env:TEMP\telegraf-1.37.1_windows_amd64.zip"
+$installDir = "C:\Program Files\InfluxData\telegraf"
+$configFile = "$installDir\telegraf.conf"
+
+# ตรวจสอบสิทธิ์ Administrator
+if (!([Security.Principal.WindowsPrincipal][Security.Principal.WindowsIdentity]::GetCurrent()).IsInRole([Security.Principal.WindowsBuiltInRole]::Administrator)) {
+    Write-Error "กรุณารัน PowerShell ด้วยสิทธิ์ 'Run as Administrator'"
+    return
+}
+
+# --- 2. สร้างโฟลเดอร์ปลายทาง ---
+if (!(Test-Path $installDir)) {
+    Write-Host "Creating directory: $installDir" -ForegroundColor Cyan
+    New-Item -ItemType Directory -Force -Path $installDir | Out-Null
+}
+
+# --- 3. ดาวน์โหลดไฟล์ ---
+Write-Host "Downloading Telegraf from $url ..." -ForegroundColor Cyan
+Invoke-WebRequest -Uri $url -UseBasicParsing -OutFile $zipFile
+
+# --- 4. แตกไฟล์และจัดเตรียมไฟล์ ---
+Write-Host "Extracting files..." -ForegroundColor Cyan
+Expand-Archive -Path $zipFile -DestinationPath "$env:TEMP\telegraf_temp" -Force
+$extractedFiles = Get-ChildItem -Path "$env:TEMP\telegraf_temp\telegraf-1.37.1"
+Copy-Item -Path "$($extractedFiles.FullName)\*" -Destination $installDir -Recurse -Force
+Remove-Item -Path "$env:TEMP\telegraf_temp" -Recurse -Force # ทำความสะอาดไฟล์ชั่วคราว
+
+# --- 5. สร้างไฟล์ telegraf.conf (IIDA Configuration) ---
+Write-Host "Generating telegraf.conf..." -ForegroundColor Cyan
+$configContent = @"
+[global_tags]
+  Company = "IIDA ELECTRONICS (THAILAND) COMPANY LIMITED"
+  System  = "Windows"
+
+[agent]
+  interval = "10s"
+  round_interval = true
+  metric_batch_size = 1000
+  metric_buffer_limit = 10000
+  collection_jitter = "0s"
+  flush_interval = "10s"
+  flush_jitter = "0s"
+  precision = ""
+  hostname = ""
+  omit_hostname = false
+
+[[outputs.influxdb_v2]]
+  urls = ["http://10.232.9.98:8086"]
+  token = "vLmB2c3byyR0NdQjIetLS5rF9E-aIfiKx-WLGV-GUn57Ag2ctscniAp2P1FFhR7_QTgAlhufT56-IWj2NwBPsA=="
+  organization = "01_Monitoring_ORG"
+  bucket = "01_Monitoring_BUCKET"
+
+[[inputs.win_perf_counters]]
+  [[inputs.win_perf_counters.object]]
+    ObjectName = "Processor"
+    Instances = ["_Total"]
+    Counters = ["% Processor Time", "User Time", "Idle Time"]
+    Measurement = "win_cpu"
+
+[[inputs.win_perf_counters]]
+  [[inputs.win_perf_counters.object]]
+    ObjectName = "Memory"
+    Counters = ["Available Bytes", "Committed Bytes", "% Committed Bytes In Use"]
+    Instances = ["------"]
+    Measurement = "win_mem"
+
+[[inputs.win_perf_counters]]
+  [[inputs.win_perf_counters.object]]
+    ObjectName = "LogicalDisk"
+    Instances = ["*"]
+    Counters = ["% Free Space", "Free Megabytes", "Current Disk Queue Length"]
+    Measurement = "win_disk"
+    IncludeTotal = true
+
+[[inputs.win_perf_counters]]
+  [[inputs.win_perf_counters.object]]
+    ObjectName = "System"
+    Counters = ["Context Switches/sec", "System Calls/sec", "Processor Queue Length", "System Up Time"]
+    Instances = ["------"]
+    Measurement = "win_system"
+
+[[inputs.win_perf_counters]]
+  [[inputs.win_perf_counters.object]]
+    ObjectName = "Network Interface"
+    Counters = ["Bytes Received/sec", "Bytes Sent/sec", "Packets Received/sec", "Packets Sent/sec"]
+    Instances = ["*"]
+    Measurement = "win_net"
+"@
+
+$configContent | Out-File -FilePath $configFile -Encoding UTF8
+
+# --- 6. ติดตั้งและเริ่มทำงาน Windows Service ---
+Write-Host "Installing Windows Service..." -ForegroundColor Cyan
+Set-Location $installDir
+
+# ตรวจสอบว่ามี Service เดิมอยู่หรือไม่ ถ้ามีให้ถอนการติดตั้งก่อนเพื่อ Update
+if (Get-Service telegraf -ErrorAction SilentlyContinue) {
+    Write-Host "Found existing service. Reinstalling..." -ForegroundColor Yellow
+    .\telegraf.exe --service stop
+    .\telegraf.exe --service uninstall
+}
+
+.\telegraf.exe --service install --config $configFile
+.\telegraf.exe --service start
+
+# --- 7. ตรวจสอบสถานะสุดท้าย ---
+Write-Host "`nInstallation Complete for IIDA ELECTRONICS!" -ForegroundColor Green
+Get-Service telegraf
