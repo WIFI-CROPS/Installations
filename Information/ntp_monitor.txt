@@ -1,1 +1,6 @@
-
+InfluxDB User: Monitor_ADM  
+         Password: WXWSO,K3;K2lVD
+         Organization : 01_Monitoring_ORG
+         Bucket : 01_Monitoring_BUCKET
+   Token : wUiHw9u1Sx_5dtFFWr-K35p9wnCe_0azR7r7O91bl6zWHVZbFoD133HSMzmJhO1BqVP5k9F-EB8J-fcijC9zmA==
+Teletraf : 01_Servers_Monitoring_Sys
