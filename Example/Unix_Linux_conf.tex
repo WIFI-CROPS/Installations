@@ -1,0 +1,71 @@
+root@monitor002:/etc/telegraf# cat telegraf.conf
+# Global tags apply to all metrics collected by this agent
+[global_tags]
+  Company = "COMPANY NAME"
+  System  = "Unix/Linux"
+# Agent configurations
+[agent]
+  interval = "10s"
+  round_interval = true
+  metric_batch_size = 1000
+  metric_buffer_limit = 10000
+  collection_jitter = "0s"
+  flush_interval = "10s"
+  flush_jitter = "0s"
+  precision = ""
+  hostname = "" # ปล่อยว่างไว้ Telegraf จะดึง hostname ของเครื่องมาเองอัตโนมัติ
+  omit_hostname = false
+###############################################################################
+#                            OUTPUT PLUGINS                                   #
+###############################################################################
+# เลือกเปิดใช้งาน Output ตามที่คุณใช้งาน (ตัวอย่างนี้คือ InfluxDB v2)
+[[outputs.influxdb_v2]]
+  urls = ["http://10.232.9.98:8086"]
+  token = "vLmB2c3byyR0NdQjIetLS5rF9E-aIfiKx-WLGV-GUn57Ag2ctscniAp2P1FFhR7_QTgAlhufT56-IWj2NwBPsA=="
+  organization = "01_Monitoring_ORG"
+  bucket = "01_Monitoring_BUCKET"
+###############################################################################
+#                            INPUT PLUGINS                                    #
+###############################################################################
+# เก็บข้อมูลการใช้งาน CPU
+[[inputs.cpu]]
+  percpu = true
+  totalcpu = true
+  collect_cpu_time = false
+  report_active = false
+
+# เก็บข้อมูล Memory
+[[inputs.mem]]
+
+# เก็บข้อมูลการเขียน/อ่าน Disk
+[[inputs.disk]]
+  ignore_fs = ["tmpfs", "devtmpfs", "devfs", "iso9660", "overlay", "aufs", "squashfs"]
+
+# เก็บข้อมูล Disk I/O
+[[inputs.diskio]]
+
+# เก็บข้อมูล Network Interface
+[[inputs.net]]
+
+# เก็บข้อมูล System Load และ Uptime
+[[inputs.system]]
+
+# เก็บข้อมูล Process ต่างๆ ในระบบ
+[[inputs.processes]]
+# --- เพิ่มส่วนนี้สำหรับ Ping Report ---
+[[inputs.ping]]
+  ## รายชื่อ IP หรือ URL ที่ต้องการทดสอบการเชื่อมต่อ
+  urls = ["8.8.8.8", "10.232.1.1", "10.232.9.1"] # เปลี่ยนเป็น IP Gateway หรือ Server ที่ต้องการ monitor
+
+  ## จำนวนการส่ง packet ในแต่ละครั้ง (แนะนำ 3-5)
+  count = 5
+
+  ## ระยะเวลาที่รอการตอบกลับ (Timeout)
+  timeout = 1.0
+
+  ## ระยะเวลารอระหว่างการส่งแต่ละ packet
+  deadline = 10
+
+  ## ใช้คำสั่ง Ping จาก System โดยตรง (แนะนำสำหรับ Linux)
+  method = "exec"
+root@monitor002:/etc/telegraf#
