@@ -1,0 +1,67 @@
+[global_tags]
+  Company = "IIDA ELECTRONICS (THAILAND) COMPANY LIMITED"
+  System  = "Windows"
+
+[agent]
+  interval = "10s"
+  round_interval = true
+  metric_batch_size = 1000
+  metric_buffer_limit = 10000
+  collection_jitter = "0s"
+  flush_interval = "10s"
+  flush_jitter = "0s"
+  precision = ""
+  hostname = ""
+  omit_hostname = false
+
+[[outputs.influxdb_v2]]
+  urls = ["http://10.232.1.10:8086"]
+  token = "Rku94J0phLQFMyUPbvf3QZ1FtQwWnPkEqRyiCm8FwLjTeTp5pOphW3h8UcUhTnI5D9PGRAL6qCQmZJTrDEVGHw=="
+  organization = "01_Monitoring_ORG"
+  bucket = "01_Monitoring_BUCKET"
+
+[[inputs.win_perf_counters]]
+  [[inputs.win_perf_counters.object]]
+    ObjectName = "Processor"
+    Instances = ["_Total"]
+    Counters = ["% Processor Time", "User Time", "Idle Time"]
+    Measurement = "win_cpu"
+
+[[inputs.win_perf_counters]]
+  [[inputs.win_perf_counters.object]]
+    ObjectName = "Memory"
+    Counters = ["Available Bytes", "Committed Bytes", "% Committed Bytes In Use"]
+    Instances = ["------"]
+    Measurement = "win_mem"
+
+[[inputs.win_perf_counters]]
+  [[inputs.win_perf_counters.object]]
+    ObjectName = "LogicalDisk"
+    Instances = ["*"]
+    Counters = ["% Free Space", "Free Megabytes", "Current Disk Queue Length"]
+    Measurement = "win_disk"
+    IncludeTotal = true
+
+[[inputs.win_perf_counters]]
+  [[inputs.win_perf_counters.object]]
+    ObjectName = "System"
+    Counters = ["Context Switches/sec", "System Calls/sec", "Processor Queue Length", "System Up Time"]
+    Instances = ["------"]
+    Measurement = "win_system"
+
+[[inputs.win_perf_counters]]
+  [[inputs.win_perf_counters.object]]
+    ObjectName = "Network Interface"
+    Counters = ["Bytes Received/sec", "Bytes Sent/sec", "Packets Received/sec", "Packets Sent/sec"]
+    Instances = ["*"]
+    Measurement = "win_net"
+[[inputs.win_services]]
+  ## Names of the services to monitor. Leave empty to monitor all the available services on the host. Globs accepted. Case sensitive.
+  service_names = [
+    "MSSQLSERVER",
+    "SQLTELEMETRY",
+    "SQLWriter",
+    "SQLBrowser",
+  ]
+  ## (Option) หากต้องการยกเว้นบาง Service กรณีที่เลือกมอนิเตอร์ทั้งหมด
+  # excluded_service_names = ["WinRM"]
