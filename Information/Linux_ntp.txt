@@ -23,7 +23,7 @@
 # เลือกเปิดใช้งาน Output ตามที่คุณใช้งาน (ตัวอย่างนี้คือ InfluxDB v2)
 [[outputs.influxdb_v2]]
   urls = ["http://10.232.1.10:8086"]
-  token = "vLmB2c3byyR0NdQjIetLS5rF9E-aIfiKx-WLGV-GUn57Ag2ctscniAp2P1FFhR7_QTgAlhufT56-IWj2NwBPsA=="
+  token = "Rku94J0phLQFMyUPbvf3QZ1FtQwWnPkEqRyiCm8FwLjTeTp5pOphW3h8UcUhTnI5D9PGRAL6qCQmZJTrDEVGHw=="
   organization = "01_Monitoring_ORG"
   bucket = "01_Monitoring_BUCKET"
 
